@@ -25,14 +25,12 @@ jobs:
 
       - name: Extract project
         run: |
-          unzip WaterCustomers.zip -d extracted
-          find extracted -name settings.gradle -o -name settings.gradle.kts
-          PROJECT_DIR=$(dirname "$(find extracted -name settings.gradle -o -name settings.gradle.kts | head -n 1)")
-          cd "$PROJECT_DIR"
+          unzip -o WaterCustomers.zip -d project
+          cd project
           gradle :app:assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
           name: WaterCustomers-debug-apk
-          path: extracted/**/app/build/outputs/apk/debug/app-debug.apk
+          path: project/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
