@@ -23,7 +23,6 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      - 
       - name: Extract project
         run: |
           unzip WaterCustomers.zip -d extracted
