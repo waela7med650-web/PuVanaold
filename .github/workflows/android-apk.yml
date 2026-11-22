@@ -1,4 +1,3 @@
-
 name: Build Android APK
 
 on:
@@ -23,14 +22,17 @@ jobs:
         with:
           gradle-version: "8.9"
 
+      
       - name: Extract project
         run: |
           unzip -o WaterCustomers.zip -d project
-          cd project
+          PROJECT_DIR=$(find project -name settings.gradle.kts -printf '%h\n' | head -n 1)
+          echo "Project directory: $PROJECT_DIR"
+          cd "$PROJECT_DIR"
           gradle :app:assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
           name: WaterCustomers-debug-apk
-          path: project/app/build/outputs/apk/debug/app-debug.apk
+          path: project/**/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
